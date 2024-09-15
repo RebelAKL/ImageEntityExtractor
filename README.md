@@ -77,7 +77,7 @@ pip install -r requirements.txt
 
 Ensure that you have the following installed:
 
-    Python 3.x
+    Python 3.10
     Tesseract OCR
     PyTorch (for Faster R-CNN)
     TensorFlow (for text classification)
