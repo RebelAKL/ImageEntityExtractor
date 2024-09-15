@@ -1,132 +1,71 @@
 Entity Extraction from Images - ML Hackathon
 Overview
 
-This project aims to develop a machine learning model that extracts entity values from product images. The extracted information, such as weight, volume, and dimensions, is critical for digital marketplaces where textual descriptions might be missing. The solution uses Optical Character Recognition (OCR) with Tesseract and object detection with Faster R-CNN, along with a text classification model to predict entity values.
+In the rapidly expanding digital marketplace, many products lack detailed textual descriptions. Accurate extraction of key product attributes like weight, volume, and dimensions directly from images is crucial for improving product listings and user experience. This project addresses this problem by developing a machine learning model to extract these attributes from product images.
+Problem Statement
 
-Project Structure
+The goal is to build a model that can extract specific entity values from product images. These entities include attributes such as weight, volume, wattage, and dimensions, which are often displayed in images but may not be included in the textual descriptions of the products. The challenge involves:
 
+    Image Processing: Extracting readable text from images where attributes are visually represented.
+    Entity Recognition: Identifying and categorizing the extracted text to determine which attribute it represents and its value.
+    Prediction and Formatting: Predicting and formatting the output to match specified formats and units.
 
+Solution Approach
+1. Data Preprocessing
 
-project/
-├── dataset/
-│   ├── train.csv
-│   ├── test.csv
-│   ├── sample_test.csv
-│   └── sample_test_out.csv
-├── src/
-│   ├── constants.py
-│   ├── sanity.py
-│   └── utils.py
-├── models/
-│   ├── object_detection.py
-│   └── text_classification.py
-├── preprocessing/
-│   └── preprocess.py
-├── main.py
-└── requirements.txt
+Data Loading and Image Downloading
 
+    Load Dataset: Read the training and test datasets to extract image links and entity labels.
+    Download Images: Fetch images from URLs provided in the dataset and save them locally for processing.
 
-Certainly! Here’s a sample README.md file that explains the working of the code for your GitHub repository.
-Entity Extraction from Images - ML Hackathon
-Overview
+Text Extraction and Cleaning
 
-This project aims to develop a machine learning model that extracts entity values from product images. The extracted information, such as weight, volume, and dimensions, is critical for digital marketplaces where textual descriptions might be missing. The solution uses Optical Character Recognition (OCR) with Tesseract and object detection with Faster R-CNN, along with a text classification model to predict entity values.
-Project Structure
+    OCR with Tesseract: Use Tesseract OCR to extract text from images. The extracted text is then cleaned to remove unwanted characters and white spaces.
+    Preprocessing: Process and prepare the text for further analysis.
 
-css
+2. Feature Extraction
 
-project/
-├── dataset/
-│   ├── train.csv
-│   ├── test.csv
-│   ├── sample_test.csv
-│   └── sample_test_out.csv
-├── src/
-│   ├── constants.py
-│   ├── sanity.py
-│   └── utils.py
-├── models/
-│   ├── object_detection.py
-│   └── text_classification.py
-├── preprocessing/
-│   └── preprocess.py
-├── main.py
-└── requirements.txt
+Optical Character Recognition (OCR)
 
-Directory and File Descriptions
+    Tesseract OCR: Extracts raw text from images. Tesseract is a powerful open-source OCR tool that is used to convert image data into text.
 
-    dataset/: Contains CSV files with training and test data. The train.csv file includes labeled data, while test.csv includes unlabeled data.
-    src/: Contains utility functions and constants.
-        constants.py: Defines allowed units for predictions.
-        sanity.py: Contains a sanity checker to validate output formatting.
-        utils.py: Includes functions for downloading images and extracting text with Tesseract.
-    models/: Contains code for object detection and text classification.
-        object_detection.py: Implements object detection using Faster R-CNN.
-        text_classification.py: Implements a text classification model using TensorFlow/Keras.
-    preprocessing/: Contains code for preprocessing the data.
-        preprocess.py: Prepares training data by extracting and cleaning text from images.
-    main.py: The entry point script that orchestrates the entire pipeline from data preprocessing to model training and prediction.
-    requirements.txt: Lists the required Python packages.
+Object Detection
 
+    Faster R-CNN: Implement Faster R-CNN, a robust object detection algorithm, to identify relevant objects in the images. This step is crucial for localizing regions of interest where entity values might be present.
 
+3. Model Building and Training
 
-    Installation
+Text Classification Model
 
-To set up the environment and install the required dependencies, use:
+    Text Feature Extraction: Convert the cleaned text data into numerical features using tokenization and padding.
+    Model Architecture: Use a Convolutional Neural Network (CNN) for text classification. The model learns to categorize text into predefined entity values.
+    Training: Train the model using labeled data from train.csv, employing techniques like validation and hyperparameter tuning to optimize performance.
 
-bash
+Combining Object Detection and OCR
 
-pip install -r requirements.txt
+    Region-Based Analysis: Use Faster R-CNN to detect objects and then apply OCR to specific regions within those objects. This combination allows for targeted extraction of text from regions where relevant information is likely to be found.
 
-Ensure that you have the following installed:
+4. Prediction and Output Formatting
 
-    Python 3.x
-    Tesseract OCR
-    PyTorch (for Faster R-CNN)
-    TensorFlow (for text classification)
+Prediction on Test Data
 
+    Text Extraction: Extract and clean text from test images.
+    Model Inference: Use the trained classification model to predict entity values based on extracted text.
+    Output Formatting: Format predictions according to the specified guidelines, ensuring correct units and formatting.
 
-    Certainly! Here’s a sample README.md file that explains the working of the code for your GitHub repository.
-Entity Extraction from Images - ML Hackathon
-Overview
+Validation
 
-This project aims to develop a machine learning model that extracts entity values from product images. The extracted information, such as weight, volume, and dimensions, is critical for digital marketplaces where textual descriptions might be missing. The solution uses Optical Character Recognition (OCR) with Tesseract and object detection with Faster R-CNN, along with a text classification model to predict entity values.
-Project Structure
+    Sanity Check: Validate the output format to ensure it adheres to the required structure and conventions.
 
-css
+Unique Aspects of This Model
 
-project/
-├── dataset/
-│   ├── train.csv
-│   ├── test.csv
-│   ├── sample_test.csv
-│   └── sample_test_out.csv
-├── src/
-│   ├── constants.py
-│   ├── sanity.py
-│   └── utils.py
-├── models/
-│   ├── object_detection.py
-│   └── text_classification.py
-├── preprocessing/
-│   └── preprocess.py
-├── main.py
-└── requirements.txt
+    Combination of OCR and Object Detection: This approach uniquely integrates OCR with object detection to improve text extraction accuracy. By using Faster R-CNN to localize text regions and then applying OCR, the model can effectively handle diverse and complex images.
 
-Directory and File Descriptions
+    Custom Text Classification: The model utilizes a CNN for text classification, tailored to predict entity values from extracted text. This approach ensures that the predictions are both accurate and aligned with the entity values in the dataset.
 
-    dataset/: Contains CSV files with training and test data. The train.csv file includes labeled data, while test.csv includes unlabeled data.
-    src/: Contains utility functions and constants.
-        constants.py: Defines allowed units for predictions.
-        sanity.py: Contains a sanity checker to validate output formatting.
-        utils.py: Includes functions for downloading images and extracting text with Tesseract.
-    models/: Contains code for object detection and text classification.
-        object_detection.py: Implements object detection using Faster R-CNN.
-        text_classification.py: Implements a text classification model using TensorFlow/Keras.
-    preprocessing/: Contains code for preprocessing the data.
-        preprocess.py: Prepares training data by extracting and cleaning text from images.
-    main.py: The entry point script that orchestrates the entire pipeline from data preprocessing to model training and prediction.
-    requirements.txt: Lists the required Python packages.
+    End-to-End Pipeline: The solution encompasses an end-to-end pipeline from data preprocessing and feature extraction to model training and prediction. This comprehensive approach ensures seamless integration and performance optimization across all stages of the process.
+
+    Adaptability: The pipeline is designed to be adaptable to various types of products and images. By training on diverse datasets and using robust detection and extraction methods, the model can handle a wide range of product attributes.
 
 Installation
 
@@ -147,74 +86,7 @@ Usage
 Data Preparation
 
     Place the dataset files (train.csv, test.csv, sample_test.csv, and sample_test_out.csv) into the dataset/ directory.
-    The train.csv file should contain labeled data with image_link, entity_name, and entity_value.
-    The test.csv file should contain image_link and group_id.
-
-
-
-    Certainly! Here’s a sample README.md file that explains the working of the code for your GitHub repository.
-Entity Extraction from Images - ML Hackathon
-Overview
-
-This project aims to develop a machine learning model that extracts entity values from product images. The extracted information, such as weight, volume, and dimensions, is critical for digital marketplaces where textual descriptions might be missing. The solution uses Optical Character Recognition (OCR) with Tesseract and object detection with Faster R-CNN, along with a text classification model to predict entity values.
-Project Structure
-
-css
-
-project/
-├── dataset/
-│   ├── train.csv
-│   ├── test.csv
-│   ├── sample_test.csv
-│   └── sample_test_out.csv
-├── src/
-│   ├── constants.py
-│   ├── sanity.py
-│   └── utils.py
-├── models/
-│   ├── object_detection.py
-│   └── text_classification.py
-├── preprocessing/
-│   └── preprocess.py
-├── main.py
-└── requirements.txt
-
-Directory and File Descriptions
-
-    dataset/: Contains CSV files with training and test data. The train.csv file includes labeled data, while test.csv includes unlabeled data.
-    src/: Contains utility functions and constants.
-        constants.py: Defines allowed units for predictions.
-        sanity.py: Contains a sanity checker to validate output formatting.
-        utils.py: Includes functions for downloading images and extracting text with Tesseract.
-    models/: Contains code for object detection and text classification.
-        object_detection.py: Implements object detection using Faster R-CNN.
-        text_classification.py: Implements a text classification model using TensorFlow/Keras.
-    preprocessing/: Contains code for preprocessing the data.
-        preprocess.py: Prepares training data by extracting and cleaning text from images.
-    main.py: The entry point script that orchestrates the entire pipeline from data preprocessing to model training and prediction.
-    requirements.txt: Lists the required Python packages.
-
-Installation
-
-To set up the environment and install the required dependencies, use:
-
-bash
-
-pip install -r requirements.txt
-
-Ensure that you have the following installed:
-
-    Python 3.x
-    Tesseract OCR
-    PyTorch (for Faster R-CNN)
-    TensorFlow (for text classification)
-
-Usage
-Data Preparation
-
-    Place the dataset files (train.csv, test.csv, sample_test.csv, and sample_test_out.csv) into the dataset/ directory.
-    The train.csv file should contain labeled data with image_link, entity_name, and entity_value.
-    The test.csv file should contain image_link and group_id.
+    Ensure that the train.csv file contains labeled data with image_link, entity_name, and entity_value, and that test.csv contains image_link and group_id.
 
 Running the Pipeline
 
@@ -224,18 +96,17 @@ bash
 
 python main.py
 
-The script performs the following steps:
+This script will:
 
-    Download Images: Downloads images specified in test.csv to the images/ directory.
-    Preprocess Data: Extracts and cleans text from images using OCR.
-    Train Model: Trains a text classification model based on the provided training data.
-    Predict: Uses the trained model to predict entity values for the test data.
-    Save Predictions: Saves predictions to output.csv.
-    Validate Output: Checks the output file format using the sanity checker.
+    Download images from URLs provided in test.csv.
+    Preprocess images by extracting and cleaning text.
+    Train the text classification model using the prepared training data.
+    Predict entity values for test images and save results to output.csv.
+    Validate the output format using the sanity checker.
 
 Output
 
-The output will be saved in output.csv with the following columns:
+The results will be saved in output.csv with columns:
 
     index: The unique identifier from the test set.
     prediction: The predicted entity value in the format "x unit".
@@ -243,5 +114,5 @@ The output will be saved in output.csv with the following columns:
 Notes
 
     Tesseract Path: Ensure that the Tesseract executable path in src/utils.py is correctly set for your system.
-    Model Fine-Tuning: You may need to adjust model parameters and perform hyperparameter tuning based on your specific dataset.
-    Error Handling: Ensure proper handling of exceptions and errors in real-world scenarios.
+    Model Fine-Tuning: Adjust model parameters and perform hyperparameter tuning based on your specific dataset and requirements.
+    Error Handling: Properly handle exceptions and errors for robust performance in real-world scenarios.
